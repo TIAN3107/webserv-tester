@@ -151,43 +151,6 @@ func TestHttp(t *testing.T){
 	}
 }
 
-// func SendReques(serverAddr string, request string) (Result, error) {
-//     var res Result
-
-//     conn, err := net.DialTimeout("tcp", serverAddr, 5*time.Second)
-//     if err != nil {
-//         return res, fmt.Errorf("dial: %w", err)
-//     }
-//     defer conn.Close()
-
-//     conn.SetDeadline(time.Now().Add(5 * time.Second))
-
-//     if _, err := conn.Write([]byte(request)); err != nil {
-//         return res, fmt.Errorf("write: %w", err)
-//     }
-
-//     resp, err := http.ReadResponse(bufio.NewReader(conn), nil)
-//     if err != nil {
-//         return res, fmt.Errorf("read response: %w", err)
-//     }
-//     defer resp.Body.Close()
-
-//     body, err := io.ReadAll(io.LimitReader(resp.Body, 1<<20)) // cap at 1MB
-//     if err != nil {
-//         return res, fmt.Errorf("read body: %w", err)
-//     }
-
-//     res.StatusCode = resp.StatusCode
-//     res.Header = resp.Header
-//     res.Body = string(body)
-//     return res, nil
-// }
-
-
-
-
-
-
 
 
 
