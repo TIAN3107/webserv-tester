@@ -8,7 +8,7 @@ import urllib.request, subprocess, time, os, signal, socket
 # 	name = input("Obviously ")
 
 #SET THIS to your server adress
-serverAdress = "http://127.0.0.1:9001"
+serverAdress = "http://127.0.0.1:8080"
 
 print ("Hello World")
 # print ("Spamming single requests")
