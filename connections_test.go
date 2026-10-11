@@ -13,10 +13,10 @@ import (
 
 //SET THIS to the server adress you have in your config file
 var serverAddr = "127.0.0.1:8080"
-//SET THIS to the location of your webserv. Normally it expects to be in 2 folders for example tests/some_other/testishere.go so webserv to folders above
-var webservexe = "../../webserv"
-//SET THIS to where your config file is at, same as before, expects 2 folders above noramlly and then in a config folder
-var configfile = "../../config/test.conf"
+//SET THIS to the location of your webserv. Normally it expects to be in 3 folders for example tests/some_other/webserv-tester/testishere.go so webserv to folders above
+var webservexe = "../../../webserv"
+//SET THIS to where your config file is at, same as before, expects 3 folders above noramlly and then in a config folder
+var configfile = "../../../config/test.conf"
 
 func TestMain(m *testing.M) {
 	cmd := exec.Command(webservexe, configfile)
