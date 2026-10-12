@@ -161,7 +161,7 @@ func TestHttp(t *testing.T){
 		// fmt.Printf("DEBUG %d %d %s", res.StatusCode, val.expected, res.Header)
 		if err != nil{
 			// t.Fatal(err)
-			fmt.Printf("\033[31m [[FAIL]] on %s Expected %d got %d \033[0m\n", err, val.expected, res.StatusCode)
+			fmt.Printf("\033[31m [[ERROR]] on %s Expected %d got %d \033[0m\n", err, val.expected, res.StatusCode)
 		} else if res.StatusCode != val.expected{
 			fmt.Printf("\033[31m [[FAIL]] on %s Expected %d got %d \033[0m\n", val.name, val.expected, res.StatusCode)
 		} else{
@@ -169,8 +169,6 @@ func TestHttp(t *testing.T){
 		}
 	}
 }
-
-
 
 
 
