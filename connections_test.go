@@ -19,9 +19,12 @@ import (
 //SET THIS to the server adress you have in your config file
 var serverAddr = "127.0.0.1:8080"
 //SET THIS to the location of your webserv. Normally it expects to be in 3 folders for example tests/some_other/webserv-tester/testishere.go so webserv to folders above
-var webservexe = "../../../webserv"
+var webservexe = "./webserv"
 //SET THIS to where your config file is at, same as before, expects 3 folders above noramlly and then in a config folder
-var configfile = "../../../config/test.conf"
+// var configfile = "default.conf"
+var configfile = "config/test.conf"
+//SET THIS to the directory your webserv directory, just do pwd where your webserv is at and copy paste it here
+var directory = "/home/tanschpe/Exercises/WebservMergeBranch"
 
 type HttpRequest struct{
 	name string;
@@ -31,7 +34,14 @@ type HttpRequest struct{
 
 func TestMain(m *testing.M) {
 	cmd := exec.Command(webservexe, configfile)
-	cmd.Stdout = os.Stdout
+	cmd.Dir = directory
+	// var fd os.File
+	fd, err := os.OpenFile("testoutput", os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0644)
+	if err != nil{
+		log.Fatalf("Could not open file: %v", err)
+	}
+	// cmd.Stdout = os.Stdout
+	cmd.Stdout = fd
 	cmd.Stderr = os.Stderr
 	if err := cmd.Start(); err != nil {
 		log.Fatalf("start webserv: %v", err)
@@ -113,6 +123,7 @@ func SendRequest(request HttpRequest) (Result, error){
 func TestHttp(t *testing.T){
 	// requests := []HttpRequest{{name:"200", request:"GET / HTTP/1.1\r\nHost: " + serverAddr + "\r\n\r\n", expected:200}, }
 	requests := []HttpRequest{
+	{"200_Basic GET", "GET / HTTP/1.1\r\nHost: 127.0.0.1:8080\r\n\r\n", 200},
 	// --- 2xx: happy path ---
 	{"200_GET_root", "GET / HTTP/1.1\r\nHost: " + serverAddr + "\r\n\r\n", 200},
 	{"200_GET_file", "GET /index.html HTTP/1.1\r\nHost: " + serverAddr + "\r\n\r\n", 200},
@@ -143,11 +154,19 @@ func TestHttp(t *testing.T){
 	if (err != nil){
 		t.Fatal(err)
 	}
-	defer conn.Close()
+	conn.Close()
 
 	for _, val := range requests{
-		 SendRequest(val)
-
+		res, err := SendRequest(val)
+		// fmt.Printf("DEBUG %d %d %s", res.StatusCode, val.expected, res.Header)
+		if err != nil{
+			// t.Fatal(err)
+			fmt.Printf("\033[31m [[FAIL]] on %s Expected %d got %d \033[0m\n", err, val.expected, res.StatusCode)
+		} else if res.StatusCode != val.expected{
+			fmt.Printf("\033[31m [[FAIL]] on %s Expected %d got %d \033[0m\n", val.name, val.expected, res.StatusCode)
+		} else{
+			fmt.Printf("\033[32m [[SUCCESS]] on %s \033[0m\n", val.name)
+		}
 	}
 }
 
