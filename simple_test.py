@@ -4,7 +4,7 @@ import urllib.request, subprocess, time, os, signal, socket
 # if (name == "Timo") :
 # 	print ("Hallo Timo")
 # else :
-# 	print ("Who tf are you??.. anyways")
+# 	print ("Who are you??")
 # 	name = input("Obviously ")
 
 #SET THIS to your server adress
